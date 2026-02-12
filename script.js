@@ -9,10 +9,11 @@
 
   let W, H, mouse = { x: -9999, y: -9999 };
   const NODES = [];
-  const NODE_COUNT_BASE = 55;
-  const MAX_DIST = 160;
-  const MOUSE_RADIUS = 200;
-  const MOUSE_FORCE = 0.012;
+  const NODE_COUNT_BASE = 60;
+  const MAX_DIST = 200;          // Increase for more connections
+  const MOUSE_RADIUS = 220;
+  const MOUSE_FORCE = 0.015;     // Attraction force
+  const BASE_VELOCITY = 0.3;     // Constant gentle drift
 
   function resize() {
     const hero = document.getElementById('hero');
@@ -25,27 +26,41 @@
     reset(init) {
       this.x  = Math.random() * W;
       this.y  = init ? Math.random() * H : -10;
-      this.vx = (Math.random() - 0.5) * 0.4;
-      this.vy = (Math.random() - 0.5) * 0.4;
+      this.vx = (Math.random() - 0.5) * BASE_VELOCITY;
+      this.vy = (Math.random() - 0.5) * BASE_VELOCITY;
       this.r  = Math.random() * 2 + 1.5;
       this.alpha = Math.random() * 0.5 + 0.3;
     }
     update() {
-      // Mouse repulsion
-      const dx = this.x - mouse.x;
-      const dy = this.y - mouse.y;
+      // Mouse ATTRACTION
+      const dx = mouse.x - this.x;  //pull toward mouse
+      const dy = mouse.y - this.y;
       const dist = Math.sqrt(dx * dx + dy * dy);
       if (dist < MOUSE_RADIUS && dist > 0) {
         const force = (MOUSE_RADIUS - dist) / MOUSE_RADIUS;
-        this.vx += (dx / dist) * force * MOUSE_FORCE * 18;
-        this.vy += (dy / dist) * force * MOUSE_FORCE * 18;
+        this.vx += (dx / dist) * force * MOUSE_FORCE;
+        this.vy += (dy / dist) * force * MOUSE_FORCE;
       }
+
+      // Add constant gentle drift so they're always moving
+      this.vx += (Math.random() - 0.5) * 0.01;
+      this.vy += (Math.random() - 0.5) * 0.01;
+
       // Damping
-      this.vx *= 0.985;
-      this.vy *= 0.985;
+      this.vx *= 0.99;
+      this.vy *= 0.99;
+
+      // Keep minimum velocity so they never fully stop
+      const speed = Math.sqrt(this.vx * this.vx + this.vy * this.vy);
+      if (speed < 0.1) {
+        this.vx += (Math.random() - 0.5) * 0.05;
+        this.vy += (Math.random() - 0.5) * 0.05;
+      }
+
       this.x += this.vx;
       this.y += this.vy;
-      // Wrap
+
+      // Wrap around edges
       if (this.x < -20) this.x = W + 20;
       if (this.x > W + 20) this.x = -20;
       if (this.y < -20) this.y = H + 20;
@@ -72,12 +87,12 @@
         const dy = NODES[i].y - NODES[j].y;
         const d  = Math.sqrt(dx * dx + dy * dy);
         if (d < MAX_DIST) {
-          const alpha = (1 - d / MAX_DIST) * 0.25;
+          const alpha = (1 - d / MAX_DIST) * 0.3;  // Increased opacity
           ctx.beginPath();
           ctx.moveTo(NODES[i].x, NODES[i].y);
           ctx.lineTo(NODES[j].x, NODES[j].y);
           ctx.strokeStyle = `rgba(59, 130, 246, ${alpha})`;
-          ctx.lineWidth = 0.8;
+          ctx.lineWidth = 1;
           ctx.stroke();
         }
       }
@@ -90,12 +105,12 @@
       const dy = n.y - mouse.y;
       const d  = Math.sqrt(dx * dx + dy * dy);
       if (d < MOUSE_RADIUS) {
-        const alpha = (1 - d / MOUSE_RADIUS) * 0.55;
+        const alpha = (1 - d / MOUSE_RADIUS) * 0.7;  // Brighter
         ctx.beginPath();
         ctx.moveTo(n.x, n.y);
         ctx.lineTo(mouse.x, mouse.y);
         ctx.strokeStyle = `rgba(96, 165, 250, ${alpha})`;
-        ctx.lineWidth = 1;
+        ctx.lineWidth = 1.5;
         ctx.stroke();
       }
     });
@@ -177,12 +192,11 @@ if (hamburger && mobileNav) {
 
 /* ══════════════════════════════════════
    CONTACT FORM → EmailJS
-   Replace these with your actual EmailJS credentials
    ══════════════════════════════════════ */
 const EMAILJS_CONFIG = {
-  serviceID: 'service_okqz76q',    // Replace with your EmailJS Service ID
-  templateID: 'template_5spavz5',  // Replace with your EmailJS Template ID
-  publicKey: 'eyud_gXLyddwgTmTR'     // Replace with your EmailJS Public Key
+  serviceID: 'service_okqz76q',
+  templateID: 'template_5spavz5',
+  publicKey: 'eyud_gXLyddwgTmTR'
 };
 
 function sendMsg() {
