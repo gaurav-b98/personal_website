@@ -1,19 +1,20 @@
 /* ══════════════════════════════════════════
-   NEURAL NETWORK CANVAS — hero background
-   Nodes connect with lines, react to cursor
+   NEURAL NETWORK CANVAS
+   Attracts to cursor (convergence), 5x denser,
+   connections fade but persist like memories
    ══════════════════════════════════════════ */
 (function initNeuralCanvas() {
   const canvas = document.getElementById('neural-canvas');
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
 
-  let W, H, mouse = { x: -9999, y: -9999 };
+  let W, H;
+  let mouse = { x: -9999, y: -9999 };
   const NODES = [];
-  const NODE_COUNT_BASE = 60;
-  const MAX_DIST = 200;          // Increase for more connections
-  const MOUSE_RADIUS = 220;
-  const MOUSE_FORCE = 0.015;     // Attraction force
-  const BASE_VELOCITY = 0.3;     // Constant gentle drift
+  const EDGES = []; // Persistent edge memory
+  const MAX_DIST   = 140;
+  const MOUSE_R    = 280;
+  const MOUSE_ATTRACT = 0.008; // Attraction instead of repulsion
 
   function resize() {
     const hero = document.getElementById('hero');
@@ -22,45 +23,31 @@
   }
 
   class Node {
-    constructor() { this.reset(true); }
-    reset(init) {
+    constructor() { this.init(); }
+    init() {
       this.x  = Math.random() * W;
-      this.y  = init ? Math.random() * H : -10;
-      this.vx = (Math.random() - 0.5) * BASE_VELOCITY;
-      this.vy = (Math.random() - 0.5) * BASE_VELOCITY;
-      this.r  = Math.random() * 2 + 1.5;
-      this.alpha = Math.random() * 0.5 + 0.3;
+      this.y  = Math.random() * H;
+      this.vx = (Math.random() - 0.5) * 0.25;
+      this.vy = (Math.random() - 0.5) * 0.25;
+      this.r  = Math.random() * 1.2 + 0.8;
+      this.alpha = Math.random() * 0.4 + 0.2;
     }
     update() {
-      // Mouse ATTRACTION
-      const dx = mouse.x - this.x;  //pull toward mouse
+      // Mouse ATTRACTION (convergence when key found)
+      const dx = mouse.x - this.x;
       const dy = mouse.y - this.y;
-      const dist = Math.sqrt(dx * dx + dy * dy);
-      if (dist < MOUSE_RADIUS && dist > 0) {
-        const force = (MOUSE_RADIUS - dist) / MOUSE_RADIUS;
-        this.vx += (dx / dist) * force * MOUSE_FORCE;
-        this.vy += (dy / dist) * force * MOUSE_FORCE;
+      const d  = Math.sqrt(dx * dx + dy * dy);
+      if (d < MOUSE_R && d > 0) {
+        const pull = (MOUSE_R - d) / MOUSE_R;
+        this.vx += (dx / d) * pull * MOUSE_ATTRACT * 25;
+        this.vy += (dy / d) * pull * MOUSE_ATTRACT * 25;
       }
-
-      // Add constant gentle drift so they're always moving
-      this.vx += (Math.random() - 0.5) * 0.01;
-      this.vy += (Math.random() - 0.5) * 0.01;
-
       // Damping
       this.vx *= 0.99;
       this.vy *= 0.99;
-
-      // Keep minimum velocity so they never fully stop
-      const speed = Math.sqrt(this.vx * this.vx + this.vy * this.vy);
-      if (speed < 0.1) {
-        this.vx += (Math.random() - 0.5) * 0.05;
-        this.vy += (Math.random() - 0.5) * 0.05;
-      }
-
       this.x += this.vx;
       this.y += this.vy;
-
-      // Wrap around edges
+      // Wrap
       if (this.x < -20) this.x = W + 20;
       if (this.x > W + 20) this.x = -20;
       if (this.y < -20) this.y = H + 20;
@@ -69,62 +56,107 @@
     draw() {
       ctx.beginPath();
       ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(147, 197, 253, ${this.alpha})`;
+      ctx.fillStyle = `rgba(230, 190, 120, ${this.alpha})`;
       ctx.fill();
     }
   }
 
   function buildNodes() {
     NODES.length = 0;
-    const count = Math.floor(NODE_COUNT_BASE * (W / 1440) + 30);
+    // 5x denser - much more nodes
+    const count = Math.min(Math.floor(W / 12), 300);
     for (let i = 0; i < count; i++) NODES.push(new Node());
   }
 
-  function drawEdges() {
+  // Edge memory - connections fade but persist
+  class Edge {
+    constructor(i, j, strength) {
+      this.i = i;
+      this.j = j;
+      this.strength = strength;
+      this.age = 0;
+    }
+    fade() {
+      this.age += 0.003;
+      this.strength = Math.max(0, this.strength - 0.002);
+    }
+  }
+
+  function updateEdges() {
+    // Create new connections (learning)
     for (let i = 0; i < NODES.length; i++) {
       for (let j = i + 1; j < NODES.length; j++) {
         const dx = NODES[i].x - NODES[j].x;
         const dy = NODES[i].y - NODES[j].y;
-        const d  = Math.sqrt(dx * dx + dy * dy);
+        const d  = Math.sqrt(dx*dx + dy*dy);
         if (d < MAX_DIST) {
-          const alpha = (1 - d / MAX_DIST) * 0.3;  // Increased opacity
-          ctx.beginPath();
-          ctx.moveTo(NODES[i].x, NODES[i].y);
-          ctx.lineTo(NODES[j].x, NODES[j].y);
-          ctx.strokeStyle = `rgba(59, 130, 246, ${alpha})`;
-          ctx.lineWidth = 1;
-          ctx.stroke();
+          const existing = EDGES.find(e => 
+            (e.i === i && e.j === j) || (e.i === j && e.j === i)
+          );
+          if (!existing) {
+            EDGES.push(new Edge(i, j, (1 - d / MAX_DIST) * 0.25));
+          } else {
+            // Strengthen existing connection
+            existing.strength = Math.min(0.25, existing.strength + 0.005);
+          }
         }
+      }
+    }
+    // Fade all edges (memories fade but don't delete)
+    EDGES.forEach(e => e.fade());
+    // Remove only completely faded edges (threshold very low)
+    for (let i = EDGES.length - 1; i >= 0; i--) {
+      if (EDGES[i].strength < 0.01 && EDGES[i].age > 5) {
+        EDGES.splice(i, 1);
       }
     }
   }
 
-  function drawMouseConnections() {
-    NODES.forEach(n => {
-      const dx = n.x - mouse.x;
-      const dy = n.y - mouse.y;
-      const d  = Math.sqrt(dx * dx + dy * dy);
-      if (d < MOUSE_RADIUS) {
-        const alpha = (1 - d / MOUSE_RADIUS) * 0.7;  // Brighter
+  function drawEdges() {
+    EDGES.forEach(e => {
+      if (e.i < NODES.length && e.j < NODES.length) {
         ctx.beginPath();
-        ctx.moveTo(n.x, n.y);
-        ctx.lineTo(mouse.x, mouse.y);
-        ctx.strokeStyle = `rgba(96, 165, 250, ${alpha})`;
-        ctx.lineWidth = 1.5;
+        ctx.moveTo(NODES[e.i].x, NODES[e.i].y);
+        ctx.lineTo(NODES[e.j].x, NODES[e.j].y);
+        ctx.strokeStyle = `rgba(210, 160, 80, ${e.strength})`;
+        ctx.lineWidth = 0.5;
         ctx.stroke();
       }
     });
   }
 
+  function drawMouseLines() {
+    if (mouse.x < -999) return;
+    NODES.forEach(n => {
+      const dx = n.x - mouse.x;
+      const dy = n.y - mouse.y;
+      const d  = Math.sqrt(dx*dx + dy*dy);
+      if (d < MOUSE_R) {
+        const a = (1 - d / MOUSE_R) * 0.55;
+        ctx.beginPath();
+        ctx.moveTo(n.x, n.y);
+        ctx.lineTo(mouse.x, mouse.y);
+        ctx.strokeStyle = `rgba(235, 185, 100, ${a})`;
+        ctx.lineWidth = 0.9;
+        ctx.stroke();
+      }
+    });
+    // Cursor dot
+    ctx.beginPath();
+    ctx.arc(mouse.x, mouse.y, 3, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(230, 175, 90, 0.6)';
+    ctx.fill();
+  }
+
   function animate() {
     ctx.clearRect(0, 0, W, H);
+    updateEdges();
     drawEdges();
-    drawMouseConnections();
+    drawMouseLines();
     NODES.forEach(n => { n.update(); n.draw(); });
     requestAnimationFrame(animate);
   }
 
-  // Mouse tracking — relative to hero section
   const hero = document.getElementById('hero');
   hero.addEventListener('mousemove', e => {
     const rect = hero.getBoundingClientRect();
@@ -134,14 +166,15 @@
   hero.addEventListener('mouseleave', () => {
     mouse.x = -9999; mouse.y = -9999;
   });
-
-  // Touch support
   hero.addEventListener('touchmove', e => {
-    const rect = canvas.getBoundingClientRect();
+    const rect = hero.getBoundingClientRect();
     const t = e.touches[0];
     mouse.x = t.clientX - rect.left;
     mouse.y = t.clientY - rect.top;
   }, { passive: true });
+  hero.addEventListener('touchend', () => {
+    mouse.x = -9999; mouse.y = -9999;
+  });
 
   window.addEventListener('resize', () => { resize(); buildNodes(); });
   resize();
@@ -151,13 +184,14 @@
 
 
 /* ══════════════════════════════════════
-   SCROLL PROGRESS BAR
+   SCROLL PROGRESS
    ══════════════════════════════════════ */
 const prog = document.getElementById('progress');
 window.addEventListener('scroll', () => {
+  if (!prog) return;
   const pct = window.scrollY / (document.body.scrollHeight - window.innerHeight) * 100;
-  if (prog) prog.style.width = pct + '%';
-});
+  prog.style.width = pct + '%';
+}, { passive: true });
 
 
 /* ══════════════════════════════════════
@@ -165,22 +199,20 @@ window.addEventListener('scroll', () => {
    ══════════════════════════════════════ */
 const revealObs = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-}, { threshold: 0.1 });
+}, { threshold: 0.08 });
 document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
 
 
 /* ══════════════════════════════════════
-   HAMBURGER / MOBILE NAV
+   HAMBURGER MENU
    ══════════════════════════════════════ */
-const hamburger  = document.getElementById('hamburger');
-const mobileNav  = document.getElementById('mobile-nav');
-
+const hamburger = document.getElementById('hamburger');
+const mobileNav = document.getElementById('mobile-nav');
 if (hamburger && mobileNav) {
   hamburger.addEventListener('click', () => {
     hamburger.classList.toggle('open');
     mobileNav.classList.toggle('open');
   });
-  // Close on link tap
   mobileNav.querySelectorAll('a').forEach(a => {
     a.addEventListener('click', () => {
       hamburger.classList.remove('open');
@@ -191,12 +223,12 @@ if (hamburger && mobileNav) {
 
 
 /* ══════════════════════════════════════
-   CONTACT FORM → EmailJS
+   EMAILJS CONTACT FORM
    ══════════════════════════════════════ */
 const EMAILJS_CONFIG = {
-  serviceID: 'service_okqz76q',
+  serviceID:  'service_okqz76q',
   templateID: 'template_5spavz5',
-  publicKey: 'eyud_gXLyddwgTmTR'
+  publicKey:  'eyud_gXLyddwgTmTR'
 };
 
 function sendMsg() {
@@ -204,64 +236,42 @@ function sendMsg() {
   const email   = document.getElementById('fe').value.trim();
   const subject = document.getElementById('fs').value.trim();
   const msg     = document.getElementById('fm').value.trim();
-  
+
   if (!name || !email || !msg) {
     alert('Please fill in your name, email, and message.');
     return;
   }
-
-  // Basic email validation
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRegex.test(email)) {
     alert('Please enter a valid email address.');
     return;
   }
 
-  // Disable submit button and show loading state
-  const submitBtn = document.querySelector('.cf-submit');
-  const originalText = submitBtn.textContent;
-  submitBtn.disabled = true;
-  submitBtn.textContent = 'Sending...';
-  submitBtn.style.opacity = '0.6';
+  const btn = document.querySelector('.cf-submit');
+  const orig = btn.textContent;
+  btn.disabled = true;
+  btn.textContent = 'Sending…';
+  btn.style.opacity = '0.6';
 
-  // Send email via EmailJS
   emailjs.send(
     EMAILJS_CONFIG.serviceID,
     EMAILJS_CONFIG.templateID,
-    {
-      from_name: name,
-      from_email: email,
-      subject: subject || 'Portfolio Enquiry',
-      message: msg
-    },
+    { from_name: name, from_email: email, subject: subject || 'Portfolio Enquiry', message: msg },
     EMAILJS_CONFIG.publicKey
   )
   .then(() => {
-    // Success
     const toast = document.getElementById('toast');
     if (toast) {
-      toast.textContent = '✓ Message sent successfully!';
+      toast.textContent = '✓ Message sent — I\'ll get back to you soon.';
       toast.classList.add('show');
       setTimeout(() => toast.classList.remove('show'), 3500);
     }
-    // Clear form
-    document.getElementById('fn').value = '';
-    document.getElementById('fe').value = '';
-    document.getElementById('fs').value = '';
-    document.getElementById('fm').value = '';
-    // Reset button
-    submitBtn.disabled = false;
-    submitBtn.textContent = originalText;
-    submitBtn.style.opacity = '1';
+    ['fn','fe','fs','fm'].forEach(id => document.getElementById(id).value = '');
+    btn.disabled = false; btn.textContent = orig; btn.style.opacity = '1';
   })
-  .catch((error) => {
-    // Error
-    console.error('EmailJS Error:', error);
-    alert('Failed to send message. Please try again or email me directly at gauravb8170@gmail.com');
-    // Reset button
-    submitBtn.disabled = false;
-    submitBtn.textContent = originalText;
-    submitBtn.style.opacity = '1';
+  .catch(err => {
+    console.error('EmailJS:', err);
+    alert('Something went wrong. Please email me directly at gauravb8170@gmail.com');
+    btn.disabled = false; btn.textContent = orig; btn.style.opacity = '1';
   });
 }
-

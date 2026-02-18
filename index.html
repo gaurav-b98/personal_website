@@ -3,24 +3,24 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta name="description" content="Gaurav — ML Engineer & Data Scientist. MSc AI (First-Class). Building intelligent systems in Dublin, Ireland."/>
-  <title>Gaurav — ML Engineer & Data Scientist</title>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="styles.css"/>
+  <meta name="description" content="Gaurav — ML Engineer & Data Scientist. MSc AI (First-Class). Dublin, Ireland."/>
+  <title>Gaurav — ML Engineer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400;1,500&family=Epilogue:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="styles_v10a.css"/>
 </head>
 <body>
   <div id="progress"></div>
-  <div id="toast">✓ Opening your mail client…</div>
+  <div id="toast"></div>
 
   <!-- ══ NAV ══ -->
   <nav>
-    <a href="#hero" class="nav-logo">Gaurav<em>.</em></a>
+    <a href="#hero" class="nav-logo">Gaurav</a>
     <div class="nav-links">
       <a href="#about">About</a>
       <a href="#skills">Skills</a>
       <a href="#projects">Projects</a>
       <a href="#edu">Education</a>
-      <a href="#contact" class="nav-cta">Hire Me</a>
+      <a href="#contact" class="nav-talk">Let's Talk</a>
     </div>
     <button class="hamburger" id="hamburger" aria-label="Toggle menu">
       <span></span><span></span><span></span>
@@ -33,38 +33,34 @@
     <a href="#skills">Skills</a>
     <a href="#projects">Projects</a>
     <a href="#edu">Education</a>
-    <a href="#contact">Hire Me →</a>
+    <a href="#contact">Let's Talk</a>
   </div>
 
   <!-- ══ HERO ══ -->
   <section id="hero">
     <canvas id="neural-canvas"></canvas>
     <div class="hero-content">
-      <div class="hero-eyebrow">ML Engineer · Data Scientist · Dublin, Ireland</div>
-      <h1 class="hero-name">Building<br/><em>Intelligent</em><br/>Systems.</h1>
-      <p class="hero-tagline">
-        <strong>MSc AI — First-Class Honours.</strong> 2+ years shipping production-grade ML
-        from research prototype to reliable, high-traffic deployment.
-        Specialising in predictive modelling, anomaly detection &amp; sustainable AI.
+      <div class="hero-kicker">ML Engineer · Dublin, Ireland</div>
+      <h1 class="hero-headline">
+        Days are for thinking<br/>
+        about problems.<br/>
+        <em>Nights are for solving them.</em>
+      </h1>
+      <p class="hero-sub">
+        <strong>Connecting with problems comes easier than connecting with people.</strong> Once one catches my attention, I don't let go.
       </p>
-      <p class="hero-night-mode">Optimised for night mode — my code and my creativity.</p>
+      <p class="hero-philosophy">
+        I look for things that work, then ask why - and whether they could work better.
+      </p>
+      <p class="hero-night">Optimised for night mode — my code and my creativity.</p>
       <div class="hero-actions">
-        <a href="#projects" class="btn-fill">View My Work</a>
-        <a href="#contact" class="btn-outline-light">Get In Touch</a>
-      </div>
-      <div class="hero-pills">
-        <span class="hero-pill">PyTorch</span>
-        <span class="hero-pill">AWS SageMaker</span>
-        <span class="hero-pill">Docker · Kubernetes</span>
-        <span class="hero-pill">FastAPI</span>
-        <span class="hero-pill">MLOps</span>
-        <span class="hero-pill">LSTM · ARIMA</span>
-        <span class="hero-pill">Green AI</span>
+        <a href="#projects" class="btn-hero-primary">View My Work</a>
+        <a href="#contact" class="btn-hero-ghost">Get In Touch</a>
       </div>
       <div class="hero-stats">
         <div class="hstat">
           <div class="hstat-num">2<span>+</span></div>
-          <div class="hstat-label">Years Experience</div>
+          <div class="hstat-label">Years in Production</div>
         </div>
         <div class="hstat">
           <div class="hstat-num">3<span>K+</span></div>
@@ -81,53 +77,38 @@
       </div>
     </div>
     <div class="scroll-cue">
-      <div class="scroll-arrow">↓</div>
-      scroll to explore
+      <div class="scroll-line"></div>
+      scroll
     </div>
   </section>
 
   <!-- ══ ABOUT ══ -->
   <section id="about">
     <div class="reveal">
-      <div class="section-chip">About Me</div>
-      <h2 class="section-title">Research-driven.<br/><em>Production-focused.</em></h2>
+      <div class="section-label">About</div>
+      <h2 class="section-heading">The journey<br/><em>starts with a moment.</em></h2>
       <p class="about-body">
-        I build <strong>intelligent systems that move from research to real-world results</strong>.
-        My work spans the full ML lifecycle — from designing the right modelling strategy to
-        ensuring it performs reliably and efficiently in production environments.<br/><br/>
-        My focus areas include <strong>predictive modelling, anomaly detection for industrial IoT,</strong>
-        and <strong>sustainable AI research</strong> — reducing deep learning compute costs
-        and carbon footprints without sacrificing accuracy.
+        I didn't plan to work in AI. The moment that changed everything was small. I was walking home and saw a family using sign language with their deaf son. I watched them navigate a world that wasn't built for him, and I couldn't shake the question: what if technology could close that gap?<br/><br/>
+        That question led me to build a sign language translator for my final year project. I studied sign language grammar, the gap between spoken and gestural communication. It wasn't just code. It was trying to solve something that mattered.<br/><br/>
+        Around the same time, I found the PyData Delhi community. I met people building real things, solving real problems. That year, I joined a hackathon team working on a problem from the Forensic Science Laboratory. We built a tool to match bullet impact craters. What mattered was getting to intern there afterward, working on firearms analysis with their team.<br/><br/>
+        Since then, the problems changed but the approach didn't. I moved from accessibility tools to production ML systems at scale, then to sustainable AI research. I'm drawn to problems that are already good and ask whether they could be better.<br/><br/>
+        The domain changes. The curiosity doesn't.<br/><br/>
+        I think every problem is worth solving. It's just a matter of finding the right person for the right problem. Like matching a key to a lock. I'm looking for problems where that key happens to be ML.
       </p>
-      <div class="about-highlights">
-        <div class="about-hl">
-          <span class="hl-icon">🎯</span>
-          <div class="hl-text"><strong>Predictive ML</strong>Hybrid LSTM+ARIMA models improving failure prediction accuracy by 20%.</div>
-        </div>
-        <div class="about-hl">
-          <span class="hl-icon">⚙️</span>
-          <div class="hl-text"><strong>IoT at Scale</strong>ML systems monitoring 3,000+ industrial assets in real-time.</div>
-        </div>
-        <div class="about-hl">
-          <span class="hl-icon">🌱</span>
-          <div class="hl-text"><strong>Sustainable AI</strong>MSc thesis: 20% energy cut, 15% faster training, &lt;2% accuracy loss.</div>
-        </div>
-        <div class="about-hl">
-          <span class="hl-icon">🚀</span>
-          <div class="hl-text"><strong>MLOps</strong>End-to-end pipelines: data → training → deployment → monitoring.</div>
-        </div>
-      </div>
     </div>
+  </section>
 
-    <div class="reveal d2">
-      <!-- Experience Timeline -->
-      <div class="timeline-card">
-        <div class="tc-header">// Experience Timeline</div>
+  <!-- ══ EXPERIENCE ══ -->
+  <section id="experience">
+    <div class="reveal">
+      <div class="section-label">Experience</div>
+      <h2 class="section-heading">Work <em>History.</em></h2>
+      <div class="timeline">
         <div class="tc-item">
           <div class="tc-dot" style="background:#6366f1"></div>
           <div>
             <div class="tc-role">Shift Manager
-              <span style="font-size:10px;font-family:var(--mono);background:#ede9fe;color:#6366f1;padding:2px 7px;border-radius:3px;margin-left:6px;font-weight:500;">Part-time</span>
+              <span style="font-family:var(--mono);font-size:9px;background:#f0f0f0;color:#666;padding:2px 6px;margin-left:6px;letter-spacing:.04em;">Part-time</span>
             </div>
             <div class="tc-company">Supermac's · Dublin, Ireland</div>
             <div class="tc-date">Nov 2025 → Present</div>
@@ -137,14 +118,14 @@
           <div class="tc-dot" style="background:#6366f1"></div>
           <div>
             <div class="tc-role">Customer Service Assistant
-              <span style="font-size:10px;font-family:var(--mono);background:#ede9fe;color:#6366f1;padding:2px 7px;border-radius:3px;margin-left:6px;font-weight:500;">Part-time</span>
+              <span style="font-family:var(--mono);font-size:9px;background:#f0f0f0;color:#666;padding:2px 6px;margin-left:6px;letter-spacing:.04em;">Part-time</span>
             </div>
             <div class="tc-company">Supermac's · Dublin, Ireland</div>
             <div class="tc-date">Jun 2024 → Nov 2025</div>
           </div>
         </div>
         <div class="tc-item">
-          <div class="tc-dot" style="background:#1a56db"></div>
+          <div class="tc-dot" style="background:var(--blue)"></div>
           <div>
             <div class="tc-role">AI Software Engineer</div>
             <div class="tc-company">SenseGrow Technologies · Gurugram, India</div>
@@ -152,7 +133,7 @@
           </div>
         </div>
         <div class="tc-item">
-          <div class="tc-dot" style="background:#10b981"></div>
+          <div class="tc-dot" style="background:var(--green)"></div>
           <div>
             <div class="tc-role">Forward Deployed Software Engineer</div>
             <div class="tc-company">FireVisor Systems · Remote, Singapore</div>
@@ -169,32 +150,37 @@
         </div>
       </div>
 
-      <!-- Availability -->
       <div class="avail-badge">
         <div class="avail-dot"></div>
         Available for full-time ML roles · Stamp 1G · Dublin, Ireland
       </div>
+    </div>
+  </section>
 
-      <!-- Volunteer / Community -->
+  <!-- ══ VOLUNTEER ══ -->
+  <section id="volunteer">
+    <div class="reveal">
+      <div class="section-label">Community</div>
+      <h2 class="section-heading">Volunteer <em>Work.</em></h2>
       <div class="volunteer-strip">
-        <div class="volunteer-label">// Community &amp; Volunteering</div>
+        <div class="vol-label">Community &amp; Volunteering</div>
         <div class="vol-main">
-          <span style="font-size:16px;">🐍</span>
+          <span style="font-size:15px;">🐍</span>
           <div>
             <div class="vol-main-title">PyData Delhi — Co-organiser</div>
-            <div class="vol-main-date">Since Jan 2020 &nbsp;·&nbsp; Volunteer since May 2018</div>
+            <div class="vol-main-date">Since Jan 2020 · Volunteer since May 2018</div>
           </div>
         </div>
         <div class="vol-row">
           <div class="vol-card">
-            <span style="font-size:15px;">🇳🇱</span>
+            <span style="font-size:14px;">🇳🇱</span>
             <div>
               <div class="vol-card-title">PyData Amsterdam</div>
               <div class="vol-card-date">Volunteer · Sep 2024</div>
             </div>
           </div>
           <div class="vol-card">
-            <span style="font-size:15px;">🇫🇷</span>
+            <span style="font-size:14px;">🇫🇷</span>
             <div>
               <div class="vol-card-title">PyData Paris</div>
               <div class="vol-card-date">Volunteer · Sep 2025</div>
@@ -208,19 +194,19 @@
   <!-- ══ SKILLS ══ -->
   <section id="skills">
     <div class="skills-intro reveal">
-      <div class="section-chip">Technical Skills</div>
-      <h2 class="section-title">The <em>Stack.</em></h2>
+      <div class="section-label">Technical Skills</div>
+      <h2 class="section-heading">The <em>Stack.</em></h2>
     </div>
     <div class="skills-grid">
       <div class="sk-card reveal d1">
-        <div class="sk-head"><div class="sk-icon">💻</div><div class="sk-name">Programming &amp; APIs</div></div>
+        <div class="sk-head"><span class="sk-icon">💻</span><span class="sk-name">Programming &amp; APIs</span></div>
         <div class="sk-tags">
           <span class="sk-tag">Python</span><span class="sk-tag">SQL</span>
           <span class="sk-tag">FastAPI</span><span class="sk-tag">RESTful Services</span>
         </div>
       </div>
       <div class="sk-card reveal d2">
-        <div class="sk-head"><div class="sk-icon">🧠</div><div class="sk-name">Machine Learning &amp; AI</div></div>
+        <div class="sk-head"><span class="sk-icon">🧠</span><span class="sk-name">Machine Learning &amp; AI</span></div>
         <div class="sk-tags">
           <span class="sk-tag">PyTorch</span><span class="sk-tag">TensorFlow</span>
           <span class="sk-tag">scikit-learn</span><span class="sk-tag">CNNs</span>
@@ -229,7 +215,7 @@
         </div>
       </div>
       <div class="sk-card reveal d3">
-        <div class="sk-head"><div class="sk-icon">🔄</div><div class="sk-name">MLOps &amp; ML Systems</div></div>
+        <div class="sk-head"><span class="sk-icon">🔄</span><span class="sk-name">MLOps &amp; ML Systems</span></div>
         <div class="sk-tags">
           <span class="sk-tag">Model Versioning</span><span class="sk-tag">Experiment Tracking</span>
           <span class="sk-tag">Reproducible Pipelines</span>
@@ -238,7 +224,7 @@
         </div>
       </div>
       <div class="sk-card reveal d1">
-        <div class="sk-head"><div class="sk-icon">☁️</div><div class="sk-name">Cloud &amp; Infrastructure</div></div>
+        <div class="sk-head"><span class="sk-icon">☁️</span><span class="sk-name">Cloud &amp; Infrastructure</span></div>
         <div class="sk-tags">
           <span class="sk-tag">AWS EC2</span><span class="sk-tag">AWS S3</span>
           <span class="sk-tag">AWS IAM</span><span class="sk-tag">SageMaker</span>
@@ -246,21 +232,21 @@
         </div>
       </div>
       <div class="sk-card reveal d2">
-        <div class="sk-head"><div class="sk-icon">🗄️</div><div class="sk-name">Data &amp; Platforms</div></div>
+        <div class="sk-head"><span class="sk-icon">🗄️</span><span class="sk-name">Data &amp; Platforms</span></div>
         <div class="sk-tags">
           <span class="sk-tag">PostgreSQL</span><span class="sk-tag">Cassandra</span>
           <span class="sk-tag">Microservices Architecture</span>
         </div>
       </div>
       <div class="sk-card reveal d3">
-        <div class="sk-head"><div class="sk-icon">📊</div><div class="sk-name">Monitoring &amp; Observability</div></div>
+        <div class="sk-head"><span class="sk-icon">📊</span><span class="sk-name">Monitoring &amp; Observability</span></div>
         <div class="sk-tags">
           <span class="sk-tag">TensorBoard</span><span class="sk-tag">Plotly</span>
           <span class="sk-tag">psutil</span><span class="sk-tag">pynvml</span>
         </div>
       </div>
-      <div class="sk-card reveal d1" style="grid-column: span 1;">
-        <div class="sk-head"><div class="sk-icon">👁️</div><div class="sk-name">Computer Vision</div></div>
+      <div class="sk-card reveal d1">
+        <div class="sk-head"><span class="sk-icon">👁️</span><span class="sk-name">Computer Vision</span></div>
         <div class="sk-tags">
           <span class="sk-tag">OpenCV</span><span class="sk-tag">Image Classification</span>
           <span class="sk-tag">Defect Detection</span><span class="sk-tag">Gesture Recognition</span>
@@ -274,21 +260,19 @@
   <section id="certifications">
     <div class="cert-inner reveal">
       <div>
-        <div class="section-chip" style="background:rgba(59,130,246,0.15);color:#93c5fd;">Certifications</div>
-        <h2 style="font-family:var(--serif);font-size:clamp(24px,3vw,36px);color:#fff;letter-spacing:-0.02em;margin-top:4px;">
-          Courses &amp; <em style="font-style:italic;color:#93c5fd;">Credentials.</em>
-        </h2>
+        <div class="section-label">Certifications</div>
+        <h2 class="section-heading" style="font-size:clamp(22px,2.5vw,32px);">Courses &amp; <em>Credentials.</em></h2>
       </div>
       <div class="cert-cards">
         <div class="cert-card">
-          <div class="cert-icon">📜</div>
+          <span class="cert-icon">📜</span>
           <div>
             <div class="cert-name">Python for Everybody Specialisation</div>
             <div class="cert-src">Coursera · University of Michigan</div>
           </div>
         </div>
         <div class="cert-card">
-          <div class="cert-icon">👁️</div>
+          <span class="cert-icon">👁️</span>
           <div>
             <div class="cert-name">OpenCV Bootcamp</div>
             <div class="cert-src">OpenCV University</div>
@@ -302,8 +286,8 @@
   <section id="projects">
     <div class="projects-top reveal">
       <div>
-        <div class="section-chip">Projects</div>
-        <h2 class="section-title">Selected <em>Work.</em></h2>
+        <div class="section-label">Projects</div>
+        <h2 class="section-heading">Selected <em>Work.</em></h2>
       </div>
       <div class="proj-count">04 Projects</div>
     </div>
@@ -326,7 +310,7 @@
             A production-oriented ML training framework integrating feature ranking directly into
             backpropagation to reduce compute cost. Selective-update strategies enable scalable,
             reproducible training across major CNN architectures. Deployed on AWS GPU infrastructure
-            with full experiment tracking and resource monitoring. Extended to full ImageNet-1k (1,000 classes).
+            with full experiment tracking and resource monitoring.
           </p>
           <div class="proj-metrics">
             <div class="proj-metric"><div class="pm-val">↓15%</div><div class="pm-label">Training time</div></div>
@@ -341,13 +325,12 @@
                 <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
                 GitHub
               </a>
-              <a href="https://norma.ncirl.ie/7937/1/gaurav.pdf"
-                 target="_blank" class="proj-link proj-link-pdf">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+              <a href="https://norma.ncirl.ie/7937/1/gaurav.pdf" target="_blank" class="proj-link proj-link-pdf">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
                 Read Thesis
               </a>
             </div>
-            <span style="font-family:var(--mono);font-size:10px;color:var(--text-soft);letter-spacing:.08em;">FIRST-CLASS HONOURS</span>
+            <span style="font-family:var(--mono);font-size:10px;color:var(--ink-faint);letter-spacing:.06em;">First-Class Honours</span>
           </div>
         </div>
       </div>
@@ -360,15 +343,14 @@
           <div class="proj-title">Industrial Asset Anomaly Detection &amp; RUL Prediction</div>
           <div class="proj-tech-row">
             <span class="proj-tech">LSTM</span><span class="proj-tech">ARIMA</span>
-            <span class="proj-tech">AWS</span><span class="proj-tech">Docker</span>
-            <span class="proj-tech">FastAPI</span>
+            <span class="proj-tech">AWS</span><span class="proj-tech">Docker</span><span class="proj-tech">FastAPI</span>
           </div>
         </div>
         <div class="proj-body">
           <p class="proj-desc">
-            Hybrid ML models (LSTM, ARIMA, regression ensembles) forecasting equipment maintenance
-            needs across 3,000+ remote industrial assets. Reduced unplanned downtime by ~15–20%
-            and accelerated deployment cycles by ~25%.
+            Hybrid ML models forecasting equipment maintenance needs across 3,000+ remote
+            industrial assets. Reduced unplanned downtime by ~15–20% and accelerated
+            deployment cycles by ~25%.
           </p>
           <div class="proj-footer">
             <span class="no-link">Internal / Proprietary</span>
@@ -390,7 +372,7 @@
         </div>
         <div class="proj-body">
           <p class="proj-desc">
-            Full-stack web platform supporting plasma donation during COVID-19.
+            Full-stack platform supporting plasma donation during COVID-19.
             ML-driven donor–recipient matching based on location and blood group.
             Improved matching effectiveness and user engagement by 50%.
           </p>
@@ -418,8 +400,8 @@
         <div class="proj-body">
           <p class="proj-desc">
             Real-time sign-to-speech translation using TensorFlow and OpenCV.
-            Bidirectional communication via live video capture and gesture recognition
-            in a desktop application, enabling accessibility for deaf and hard-of-hearing users.
+            Bidirectional communication via live video capture and gesture recognition,
+            enabling accessibility for deaf and hard-of-hearing users.
           </p>
           <div class="proj-footer">
             <span class="no-link">Academic Project</span>
@@ -433,8 +415,8 @@
   <!-- ══ EDUCATION & AWARDS ══ -->
   <section id="edu">
     <div class="reveal">
-      <div class="section-chip" style="background:rgba(59,130,246,0.15);color:#93c5fd;">Education</div>
-      <div class="edu-title">Academic<br/><em style="font-style:italic;color:#93c5fd;">Background.</em></div>
+      <div class="section-label">Education</div>
+      <div class="edu-title">Academic <em style="font-style:italic;color:var(--ink-soft);">Background.</em></div>
       <div class="edu-card">
         <div class="edu-degree">MSc in Artificial Intelligence</div>
         <div class="edu-school">National College of Ireland · Dublin, Ireland</div>
@@ -461,11 +443,11 @@
       </div>
     </div>
     <div class="reveal d2">
-      <div class="section-chip" style="background:rgba(245,158,11,0.15);color:#fcd34d;">Recognition</div>
-      <div class="edu-title">Awards &amp;<br/><em style="font-style:italic;color:#fcd34d;">Honours.</em></div>
+      <div class="section-label">Recognition</div>
+      <div class="edu-title">Awards &amp; <em style="font-style:italic;color:var(--ink-soft);">Honours.</em></div>
       <div class="award-item">
         <div class="award-ico">🏆</div>
-        <div><div class="award-name">Deloitte Innovation Award</div><div class="award-src">Professional Recognition</div></div>
+        <div><div class="award-name">Deloitte Innovation Award</div><div class="award-src">Smart India Hackathon 2018 · Ballistics Recognition Tool</div></div>
       </div>
       <div class="award-item">
         <div class="award-ico">⭐</div>
@@ -473,7 +455,7 @@
       </div>
       <div class="award-item">
         <div class="award-ico">🎖</div>
-        <div><div class="award-name">Appreciation Award</div><div class="award-src">Industry Recognition</div></div>
+        <div><div class="award-name">Team Appreciation Award</div><div class="award-src">B.M. Institute of Engineering &amp; Technology</div></div>
       </div>
     </div>
   </section>
@@ -481,25 +463,26 @@
   <!-- ══ CONTACT ══ -->
   <section id="contact">
     <div class="contact-wrap">
-      <div class="section-chip reveal">Contact</div>
-      <h2 class="contact-headline reveal">Let's build<br/><em>something great.</em></h2>
+      <div class="section-label reveal">Contact</div>
+      <h2 class="contact-headline reveal">
+        Let's talk about<br/><em>interesting problems.</em>
+      </h2>
       <p class="contact-sub reveal">
-        Open to full-time ML Engineer and Data Scientist roles in Dublin and beyond.
-        Also happy to connect on research collaborations or interesting AI challenges.
+        I think every problem is worth solving - it's just about finding the right match. Like a key to a lock. If you're working on something where that key might be ML, let's talk.
       </p>
       <div class="quick-links reveal">
-        <a href="mailto:gauravb8170@gmail.com" class="qlink qlink-email">✉ gauravb8170@gmail.com</a>
-        <a href="https://linkedin.com/in/gaurav-b98" target="_blank" class="qlink qlink-li">in LinkedIn</a>
-        <a href="https://github.com/gaurav-b98" target="_blank" class="qlink qlink-gh">⌥ GitHub</a>
+        <a href="mailto:gauravb8170@gmail.com" class="qlink">✉ gauravb8170@gmail.com</a>
+        <a href="https://linkedin.com/in/gaurav-b98" target="_blank" class="qlink">in LinkedIn</a>
+        <a href="https://github.com/gaurav-b98" target="_blank" class="qlink">⌥ GitHub</a>
       </div>
       <div class="cf reveal d2">
         <div class="cf-title">Send a message</div>
         <div class="cf-row">
-          <div class="cf-group"><label>Your Name</label><input type="text" placeholder="Jane Smith" id="fn"/></div>
-          <div class="cf-group"><label>Your Email</label><input type="email" placeholder="jane@company.com" id="fe"/></div>
+          <div class="cf-group"><label>Name</label><input type="text" placeholder="Jane Smith" id="fn"/></div>
+          <div class="cf-group"><label>Email</label><input type="email" placeholder="jane@company.com" id="fe"/></div>
         </div>
-        <div class="cf-group"><label>Subject</label><input type="text" placeholder="ML Engineer Role at Acme Corp" id="fs"/></div>
-        <div class="cf-group"><label>Message</label><textarea placeholder="Tell me about the role or project…" id="fm"></textarea></div>
+        <div class="cf-group"><label>Subject</label><input type="text" placeholder="ML Engineer role at Acme Corp" id="fs"/></div>
+        <div class="cf-group"><label>Message</label><textarea placeholder="Tell me about the problem you're working on…" id="fm"></textarea></div>
         <button class="cf-submit" onclick="sendMsg()">Send Message →</button>
       </div>
     </div>
@@ -507,16 +490,16 @@
 
   <!-- ══ FOOTER ══ -->
   <footer>
-    <div class="footer-left">© 2025 Gaurav · ML Engineer</div>
+    <div class="footer-left">© 2025 Gaurav</div>
     <div class="footer-links">
       <a href="mailto:gauravb8170@gmail.com">Email</a>
       <a href="https://linkedin.com/in/gaurav-b98" target="_blank">LinkedIn</a>
       <a href="https://github.com/gaurav-b98" target="_blank">GitHub</a>
     </div>
-    <div class="footer-right">Stamp 1G · Dublin, Ireland</div>
+    <div class="footer-right">Stamp 1G · Dublin</div>
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-  <script src="script.js"></script>
+  <script src="script_v10a.js"></script>
 </body>
 </html>
