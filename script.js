@@ -226,9 +226,9 @@ if (hamburger && mobileNav) {
    EMAILJS CONTACT FORM
    ══════════════════════════════════════ */
 const EMAILJS_CONFIG = {
-  serviceID:  'service_okqz76q',
-  templateID: 'template_5spavz5',
-  publicKey:  'eyud_gXLyddwgTmTR'
+  serviceID:  'YOUR_SERVICE_ID',
+  templateID: 'YOUR_TEMPLATE_ID',
+  publicKey:  'YOUR_PUBLIC_KEY'
 };
 
 function sendMsg() {
