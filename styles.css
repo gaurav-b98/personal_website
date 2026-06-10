@@ -627,7 +627,7 @@ a.work-row-tag:hover { color: var(--gold-bright); }
   .hamburger.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
   .hamburger.open span:nth-child(2) { opacity: 0; }
   .hamburger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
-  .hero-stats { gap: 30px; }
+  .hero-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
   .skills-grid, .wt-grid { grid-template-columns: 1fr; }
   .xp-row { grid-template-columns: 1fr; gap: 8px; padding: 24px 4px; }
   .xp-date { padding-top: 0; }
