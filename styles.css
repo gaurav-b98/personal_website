@@ -385,3 +385,36 @@ footer {
 }
 a.work-row-tag { color: var(--gold); }
 a.work-row-tag:hover { color: var(--gold-bright); }
+
+/* ════════ EXPERIENCE ════════ */
+.xp-list { border-top: 1px solid var(--line); }
+.xp-row {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 26px;
+  padding: 30px 8px;
+  border-bottom: 1px solid var(--line);
+}
+.xp-lead .xp-role { font-size: 22px; }
+.xp-date {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--ink-faint);
+  letter-spacing: .06em;
+  padding-top: 5px;
+}
+.xp-role { font-family: var(--serif); font-weight: 500; font-size: 18px; }
+.xp-co { font-size: 13px; color: var(--ink-muted); margin-top: 3px; }
+.xp-note { font-size: 13px; color: var(--ink-faint); margin-top: 8px; font-style: italic; }
+.xp-tag {
+  font-family: var(--mono);
+  font-size: 9px;
+  font-style: normal;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  color: var(--ink-faint);
+  border: 1px solid var(--line);
+  padding: 2px 7px;
+  vertical-align: middle;
+  margin-left: 8px;
+}
