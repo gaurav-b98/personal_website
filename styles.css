@@ -392,6 +392,7 @@ a.work-row-tag:hover { color: var(--gold-bright); }
   display: grid;
   grid-template-columns: 220px 1fr;
   gap: 26px;
+  align-items: start;
   padding: 30px 8px;
   border-bottom: 1px solid var(--line);
 }
@@ -418,3 +419,4 @@ a.work-row-tag:hover { color: var(--gold-bright); }
   vertical-align: middle;
   margin-left: 8px;
 }
+.xp-badge { margin-top: 44px; }
