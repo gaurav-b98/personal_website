@@ -116,9 +116,15 @@ document.getElementById('year').textContent = new Date().getFullYear();
     // Position lerp, not a velocity spring — no momentum, so nodes
     // can never overshoot and oscillate across the content column.
     if (scrollT > 0 && bandW > MIN_BAND) {
-      if (n.side === 0) n.side = n.x < W / 2 ? -1 : 1;
-      const targetX = n.side < 0 ? bandW * .5 : W - bandW * .5;
-      n.x += (targetX - n.x) * .006 * scrollT;
+      if (n.side === 0) {
+        n.side = n.x < W / 2 ? -1 : 1;
+        // Own home spot spread across the band — converging on one
+        // shared x collapses the cloud into a vertical line
+        const pad = bandW * .15;
+        const offset = pad + Math.random() * (bandW * .7);
+        n.homeX = n.side < 0 ? offset : W - offset;
+      }
+      n.x += (n.homeX - n.x) * .006 * scrollT;
     } else {
       n.side = 0;
     }
