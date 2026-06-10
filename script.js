@@ -99,7 +99,7 @@ document.getElementById('year').textContent = new Date().getFullYear();
         vy: (Math.random() - .5) * .3,
         r: Math.random() * 1.3 + .6,
         a: Math.random() * .35 + .15,
-        side: Math.random() < .5 ? -1 : 1 // home margin: left or right
+        side: 0 // assigned to nearest margin when migration starts
       });
     }
   }
@@ -112,17 +112,26 @@ document.getElementById('year').textContent = new Date().getFullYear();
       n.vx += (dx / d) * pull;
       n.vy += (dy / d) * pull;
     }
-    // Past the hero, drift toward the empty side margins
+    // Past the hero, ease toward the NEAREST empty side margin.
+    // Position lerp, not a velocity spring — no momentum, so nodes
+    // can never overshoot and oscillate across the content column.
     if (scrollT > 0 && bandW > MIN_BAND) {
+      if (n.side === 0) n.side = n.x < W / 2 ? -1 : 1;
       const targetX = n.side < 0 ? bandW * .5 : W - bandW * .5;
-      n.vx += (targetX - n.x) * .0018 * scrollT;
+      n.x += (targetX - n.x) * .006 * scrollT;
+    } else {
+      n.side = 0;
     }
     n.vx *= .985;
     n.vy *= .985;
     n.x += n.vx;
     n.y += n.vy;
-    if (n.x < -20) n.x = W + 20;
-    if (n.x > W + 20) n.x = -20;
+    // Horizontal wrap only while roaming free — a banded node wrapping
+    // would streak back across the page
+    if (n.side === 0) {
+      if (n.x < -20) n.x = W + 20;
+      if (n.x > W + 20) n.x = -20;
+    }
     if (n.y < -20) n.y = H + 20;
     if (n.y > H + 20) n.y = -20;
   }
