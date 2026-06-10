@@ -179,12 +179,6 @@ section {
   margin-bottom: 48px;
 }
 .section-title em { color: var(--ink-muted); }
-.gold-rule {
-  width: 44px; height: 1px;
-  background: var(--gold);
-  border: none;
-  margin: 0 0 28px;
-}
 
 /* ════════ BUTTONS ════════ */
 .btn-gold, .btn-ghost {
@@ -383,8 +377,6 @@ footer {
   letter-spacing: .06em;
   white-space: nowrap;
 }
-a.work-row-tag { color: var(--gold); }
-a.work-row-tag:hover { color: var(--gold-bright); }
 
 /* ════════ EXPERIENCE ════════ */
 .xp-list { border-top: 1px solid var(--line); }

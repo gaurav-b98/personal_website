@@ -66,7 +66,7 @@
 Moved up, directly after hero — recruiters see projects within one scroll.
 
 - **Featured (large cards):** MSc Thesis (Feature-Ranked Backpropagation for Sustainable AI) and Greenfield (PC Build Compatibility Engine). Keep existing metrics, GitHub/thesis/live-site links.
-- **Compact (rows or small cards):** SenseGrow Anomaly Detection & RUL (Internal/Proprietary), CurbTheVirus (GitHub link), Bonjour Sign Language Translator (Academic).
+- **Compact (rows or small cards):** SenseGrow Anomaly Detection & RUL (Internal/Proprietary), CurbTheVirus (static tag — the GitHub repo returns 404 as of 2026-06-10; restore the link if the repo is made public again), Bonjour Sign Language Translator (Academic).
 
 ### 3. Experience
 
