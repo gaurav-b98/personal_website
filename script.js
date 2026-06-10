@@ -40,14 +40,14 @@ document.getElementById('year').textContent = new Date().getFullYear();
 (function typeKicker() {
   const target = document.getElementById('typed');
   const cursor = document.getElementById('typed-cursor');
-  if (!target) return;
+  if (!target || !cursor) return;
   const text = '$ whoami — ML Engineer · Dublin';
   if (prefersReducedMotion) {
     target.textContent = text;
     cursor.style.display = 'none';
     return;
   }
-  let i = 1; // "$ " already present
+  let i = 2; // "$ " (2 chars) already present in HTML
   target.textContent = '$ ';
   const tick = setInterval(() => {
     i++;

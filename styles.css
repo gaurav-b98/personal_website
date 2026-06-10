@@ -240,6 +240,7 @@ footer {
   flex-direction: column;
   justify-content: center;
   padding-top: 140px;
+  padding-bottom: 140px;
 }
 .hero-kicker { font-size: 13px; min-height: 20px; }
 #typed-cursor { color: var(--gold); animation: blink 1s steps(1) infinite; }
@@ -295,6 +296,7 @@ footer {
 }
 @keyframes pulse { 50% { opacity: .35; } }
 @media (prefers-reduced-motion: reduce) {
+  /* cursor is hidden via JS; rule here is defensive only */
   #typed-cursor, .status-dot { animation: none; }
   html { scroll-behavior: auto; }
 }
