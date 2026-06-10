@@ -166,7 +166,7 @@ if (contactForm) {
   gsap.utils.toArray('section:not(#hero) .reveal').forEach((el) => {
     gsap.from(el, {
       autoAlpha: 0, y: 28, duration: .7, ease: 'power2.out',
-      scrollTrigger: { trigger: el, start: 'top 88%' }
+      scrollTrigger: { trigger: el, start: 'top 88%', once: true }
     });
   });
 })();
