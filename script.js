@@ -59,25 +59,33 @@ document.getElementById('year').textContent = new Date().getFullYear();
   }, 45);
 })();
 
-/* ── Hero: neural network canvas ──
-   Gold constellation behind the hero. Nodes drift, link when close,
-   and drift toward the cursor. Skipped entirely under reduced motion. */
+/* ── Site-wide neural canvas ──
+   Gold constellation, fixed behind the whole page. Roams the full
+   viewport in the hero; as you scroll past it, nodes drift into the
+   empty side margins beside the content column (or fade out on
+   narrow screens where there are no margins). Skipped entirely
+   under reduced motion. */
 (function initNeuralCanvas() {
   const canvas = document.getElementById('neural-canvas');
   const hero = document.getElementById('hero');
   if (!canvas || !hero || prefersReducedMotion) return;
   const ctx = canvas.getContext('2d');
 
-  let W, H;
+  let W, H, heroH, bandW;
   let rafId = null;
+  let scrollT = 0; // 0 inside hero, eases to 1 once scrolled past it
   const mouse = { x: -9999, y: -9999 };
   const NODES = [];
   const LINK_DIST = 130;
   const MOUSE_R = 240;
+  const CONTENT_W = 1060; // text column width — bands reach the section padding
+  const MIN_BAND = 70;    // below this, sides are too thin — fade instead
 
   function resize() {
-    W = canvas.width = hero.offsetWidth;
-    H = canvas.height = hero.offsetHeight;
+    W = canvas.width = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+    heroH = hero.offsetHeight;
+    bandW = Math.max((W - CONTENT_W) / 2, 0);
   }
 
   function buildNodes() {
@@ -90,7 +98,8 @@ document.getElementById('year').textContent = new Date().getFullYear();
         vx: (Math.random() - .5) * .3,
         vy: (Math.random() - .5) * .3,
         r: Math.random() * 1.3 + .6,
-        a: Math.random() * .35 + .15
+        a: Math.random() * .35 + .15,
+        side: Math.random() < .5 ? -1 : 1 // home margin: left or right
       });
     }
   }
@@ -102,6 +111,11 @@ document.getElementById('year').textContent = new Date().getFullYear();
       const pull = (MOUSE_R - d) / MOUSE_R * .03;
       n.vx += (dx / d) * pull;
       n.vy += (dy / d) * pull;
+    }
+    // Past the hero, drift toward the empty side margins
+    if (scrollT > 0 && bandW > MIN_BAND) {
+      const targetX = n.side < 0 ? bandW * .5 : W - bandW * .5;
+      n.vx += (targetX - n.x) * .0018 * scrollT;
     }
     n.vx *= .985;
     n.vy *= .985;
@@ -115,6 +129,7 @@ document.getElementById('year').textContent = new Date().getFullYear();
 
   function draw() {
     ctx.clearRect(0, 0, W, H);
+    ctx.globalAlpha = 1 - .25 * scrollT; // quieter once scrolled
     for (let i = 0; i < NODES.length; i++) {
       for (let j = i + 1; j < NODES.length; j++) {
         const a = NODES[i], b = NODES[j];
@@ -139,12 +154,19 @@ document.getElementById('year').textContent = new Date().getFullYear();
     rafId = requestAnimationFrame(draw);
   }
 
-  hero.addEventListener('mousemove', (e) => {
-    const rect = hero.getBoundingClientRect();
-    mouse.x = e.clientX - rect.left;
-    mouse.y = e.clientY - rect.top;
-  });
-  hero.addEventListener('mouseleave', () => {
+  window.addEventListener('scroll', () => {
+    const raw = window.scrollY / (heroH * .8);
+    const c = Math.min(Math.max(raw, 0), 1);
+    scrollT = c * c * (3 - 2 * c); // smoothstep
+    // No side margins to retreat to — fade the whole canvas instead
+    canvas.style.opacity = bandW > MIN_BAND ? '1' : String(1 - scrollT);
+  }, { passive: true });
+
+  window.addEventListener('mousemove', (e) => {
+    mouse.x = e.clientX;
+    mouse.y = e.clientY;
+  }, { passive: true });
+  document.addEventListener('mouseleave', () => {
     mouse.x = -9999;
     mouse.y = -9999;
   });
@@ -163,6 +185,50 @@ document.getElementById('year').textContent = new Date().getFullYear();
   resize();
   buildNodes();
   draw();
+})();
+
+/* ── Section kickers: type on first scroll into view ──
+   Each non-hero .kicker types out like the hero one. A visually
+   hidden copy of the full text keeps screen readers unaffected. */
+(function typeSectionKickers() {
+  if (prefersReducedMotion) return;
+  if (!('IntersectionObserver' in window)) return;
+  const kickers = document.querySelectorAll('section:not(#hero) .kicker');
+  if (!kickers.length) return;
+
+  function typeInto(el) {
+    const full = el.textContent.trim();
+    el.textContent = '';
+    const sr = document.createElement('span');
+    sr.className = 'sr-only';
+    sr.textContent = full;
+    const visual = document.createElement('span');
+    visual.setAttribute('aria-hidden', 'true');
+    const cursor = document.createElement('span');
+    cursor.setAttribute('aria-hidden', 'true');
+    cursor.className = 'type-cursor';
+    cursor.textContent = '▌';
+    el.append(sr, visual, cursor);
+    let i = 0;
+    const tick = setInterval(() => {
+      i++;
+      visual.textContent = full.slice(0, i);
+      if (i >= full.length) {
+        clearInterval(tick);
+        setTimeout(() => cursor.remove(), 1200);
+      }
+    }, 30);
+  }
+
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      obs.unobserve(entry.target);
+      typeInto(entry.target);
+    });
+  }, { rootMargin: '0px 0px -12% 0px' });
+
+  kickers.forEach((k) => obs.observe(k));
 })();
 
 /* ── Contact form (EmailJS) ──

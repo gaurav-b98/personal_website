@@ -238,7 +238,7 @@ footer {
   padding-bottom: 140px;
 }
 #neural-canvas {
-  position: absolute;
+  position: fixed;
   inset: 0;
   z-index: -1;
   pointer-events: none;
@@ -637,4 +637,22 @@ footer {
   .cf { padding: 28px 20px; }
   .contact-links { flex-direction: column; gap: 14px; }
   footer { flex-direction: column; text-align: center; gap: 10px; }
+}
+
+/* ════════ TYPE-ON-SCROLL KICKERS ════════ */
+.kicker { min-height: 20px; }
+.type-cursor { color: var(--gold); animation: blink 1s steps(1) infinite; }
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+@media (prefers-reduced-motion: reduce) {
+  .type-cursor { animation: none; }
 }

@@ -15,6 +15,7 @@
   <div id="progress" aria-hidden="true"></div>
   <div id="toast" role="status"></div>
   <div class="grain" aria-hidden="true"></div>
+  <canvas id="neural-canvas" aria-hidden="true"></canvas>
 
   <nav id="nav">
     <a href="#hero" class="nav-logo">~/gaurav</a>
@@ -40,7 +41,6 @@
 
   <main>
     <section id="hero">
-      <canvas id="neural-canvas" aria-hidden="true"></canvas>
       <p class="kicker hero-kicker"><span id="typed">$ </span><span id="typed-cursor" aria-hidden="true">▌</span></p>
       <h1 class="hero-headline reveal">
         Days are for thinking<br/>about problems.<br/>
@@ -206,12 +206,7 @@
           </div>
         </div>
         <figure class="about-photo reveal">
-          <!-- When assets/photo.jpg exists, replace this placeholder div with:
-               <img src="assets/photo.jpg" alt="Gaurav"/> -->
-          <div class="photo-placeholder">
-            <span class="ph-monogram">G.</span>
-            <span class="ph-note"><span aria-hidden="true">#</span> photo.jpg — drop into assets/</span>
-          </div>
+          <img src="assets/photo.jpg" alt="Gaurav" loading="lazy"/>
         </figure>
       </div>
     </section>
