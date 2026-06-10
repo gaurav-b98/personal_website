@@ -59,6 +59,112 @@ document.getElementById('year').textContent = new Date().getFullYear();
   }, 45);
 })();
 
+/* ── Hero: neural network canvas ──
+   Gold constellation behind the hero. Nodes drift, link when close,
+   and drift toward the cursor. Skipped entirely under reduced motion. */
+(function initNeuralCanvas() {
+  const canvas = document.getElementById('neural-canvas');
+  const hero = document.getElementById('hero');
+  if (!canvas || !hero || prefersReducedMotion) return;
+  const ctx = canvas.getContext('2d');
+
+  let W, H;
+  let rafId = null;
+  const mouse = { x: -9999, y: -9999 };
+  const NODES = [];
+  const LINK_DIST = 130;
+  const MOUSE_R = 240;
+
+  function resize() {
+    W = canvas.width = hero.offsetWidth;
+    H = canvas.height = hero.offsetHeight;
+  }
+
+  function buildNodes() {
+    NODES.length = 0;
+    const count = Math.min(Math.floor(W / 14), 140);
+    for (let i = 0; i < count; i++) {
+      NODES.push({
+        x: Math.random() * W,
+        y: Math.random() * H,
+        vx: (Math.random() - .5) * .3,
+        vy: (Math.random() - .5) * .3,
+        r: Math.random() * 1.3 + .6,
+        a: Math.random() * .35 + .15
+      });
+    }
+  }
+
+  function step(n) {
+    const dx = mouse.x - n.x, dy = mouse.y - n.y;
+    const d = Math.hypot(dx, dy);
+    if (d < MOUSE_R && d > 0) {
+      const pull = (MOUSE_R - d) / MOUSE_R * .03;
+      n.vx += (dx / d) * pull;
+      n.vy += (dy / d) * pull;
+    }
+    n.vx *= .985;
+    n.vy *= .985;
+    n.x += n.vx;
+    n.y += n.vy;
+    if (n.x < -20) n.x = W + 20;
+    if (n.x > W + 20) n.x = -20;
+    if (n.y < -20) n.y = H + 20;
+    if (n.y > H + 20) n.y = -20;
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    for (let i = 0; i < NODES.length; i++) {
+      for (let j = i + 1; j < NODES.length; j++) {
+        const a = NODES[i], b = NODES[j];
+        const d = Math.hypot(a.x - b.x, a.y - b.y);
+        if (d < LINK_DIST) {
+          ctx.beginPath();
+          ctx.moveTo(a.x, a.y);
+          ctx.lineTo(b.x, b.y);
+          ctx.strokeStyle = `rgba(200, 164, 100, ${(1 - d / LINK_DIST) * .18})`;
+          ctx.lineWidth = .5;
+          ctx.stroke();
+        }
+      }
+    }
+    NODES.forEach((n) => {
+      step(n);
+      ctx.beginPath();
+      ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(224, 188, 122, ${n.a})`;
+      ctx.fill();
+    });
+    rafId = requestAnimationFrame(draw);
+  }
+
+  hero.addEventListener('mousemove', (e) => {
+    const rect = hero.getBoundingClientRect();
+    mouse.x = e.clientX - rect.left;
+    mouse.y = e.clientY - rect.top;
+  });
+  hero.addEventListener('mouseleave', () => {
+    mouse.x = -9999;
+    mouse.y = -9999;
+  });
+
+  // Pause the loop when the tab is hidden
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+      cancelAnimationFrame(rafId);
+      rafId = null;
+    } else if (rafId === null) {
+      rafId = requestAnimationFrame(draw);
+    }
+  });
+
+  window.addEventListener('resize', () => { resize(); buildNodes(); });
+  resize();
+  buildNodes();
+  draw();
+})();
+
 /* ── Contact form (EmailJS) ──
    NOTE: form sends nothing until real EmailJS credentials are pasted below.
    Get them at https://dashboard.emailjs.com → Account (public key) +
