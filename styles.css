@@ -16,7 +16,7 @@
 
 /* ════════ RESET / BASE ════════ */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; scroll-padding-top: 72px; }
 body {
   background: var(--bg);
   color: var(--ink);
@@ -57,6 +57,7 @@ em { font-style: italic; }
   width: 0;
   background: var(--gold);
   z-index: 1500;
+  transition: width .1s linear;
 }
 
 /* ════════ TOAST ════════ */
@@ -145,10 +146,11 @@ nav.scrolled {
   gap: 34px;
   z-index: 900;
   opacity: 0;
+  visibility: hidden;
   pointer-events: none;
-  transition: opacity .3s;
+  transition: opacity .3s, visibility .3s;
 }
-.mobile-nav.open { opacity: 1; pointer-events: auto; }
+.mobile-nav.open { opacity: 1; visibility: visible; pointer-events: auto; }
 .mobile-nav a {
   font-family: var(--serif);
   font-size: 28px;
@@ -205,6 +207,11 @@ section {
   color: var(--ink-muted);
 }
 .btn-ghost:hover { border-color: var(--gold); color: var(--ink); transform: translateY(-2px); }
+
+a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible {
+  outline: 1px solid var(--gold);
+  outline-offset: 3px;
+}
 
 /* ════════ FOOTER ════════ */
 footer {
