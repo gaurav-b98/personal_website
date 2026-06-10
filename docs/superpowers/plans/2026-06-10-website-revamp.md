@@ -953,8 +953,8 @@ git commit -m "Add experience timeline with SenseGrow lead and bridge framing"
   align-items: start;
 }
 .about-text p { font-size: 16px; color: var(--ink-muted); margin-bottom: 22px; max-width: 56ch; }
-.about-close { font-family: var(--serif); font-size: 21px; color: var(--ink); }
-.about-close em { color: var(--ink-muted); }
+.about-text .about-close { font-family: var(--serif); font-size: 21px; color: var(--ink); margin-bottom: 0; }
+.about-text .about-close em { color: var(--ink-muted); }
 .about-community {
   font-family: var(--mono);
   font-size: 12px;
@@ -966,7 +966,7 @@ git commit -m "Add experience timeline with SenseGrow lead and bridge framing"
   width: fit-content;
 }
 .about-community .dim { color: var(--gold); }
-.about-photo { position: relative; aspect-ratio: 4 / 5; overflow: hidden; }
+.about-photo { position: relative; min-height: 320px; aspect-ratio: 4 / 5; overflow: hidden; }
 .about-photo img {
   width: 100%; height: 100%;
   object-fit: cover;
