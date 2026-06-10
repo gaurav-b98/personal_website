@@ -149,3 +149,24 @@ if (contactForm) {
       });
   });
 }
+
+/* ── Scroll reveals (GSAP) ── */
+(function initReveals() {
+  if (prefersReducedMotion) return;
+  if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Hero children animate on load (staggered), not on scroll
+  gsap.from('#hero .reveal', {
+    autoAlpha: 0, y: 24, duration: .8, ease: 'power2.out',
+    stagger: .12, delay: .4
+  });
+
+  // Everything else reveals as it scrolls into view
+  gsap.utils.toArray('section:not(#hero) .reveal').forEach((el) => {
+    gsap.from(el, {
+      autoAlpha: 0, y: 28, duration: .7, ease: 'power2.out',
+      scrollTrigger: { trigger: el, start: 'top 88%' }
+    });
+  });
+})();
