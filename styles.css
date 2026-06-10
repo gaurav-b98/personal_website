@@ -300,3 +300,87 @@ footer {
   #typed-cursor, .status-dot { animation: none; }
   html { scroll-behavior: auto; }
 }
+
+/* ════════ WORK ════════ */
+.work-featured {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+.work-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  padding: 36px 32px;
+  display: flex;
+  flex-direction: column;
+  transition: transform .3s, border-color .3s;
+}
+.work-card:hover { transform: translateY(-4px); border-color: rgba(200,164,100,.45); }
+.work-num {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--gold);
+  letter-spacing: .12em;
+  margin-bottom: 14px;
+}
+.work-title {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 1.25;
+  margin-bottom: 14px;
+}
+.work-desc { font-size: 14px; color: var(--ink-muted); margin-bottom: 24px; }
+.work-metrics { display: flex; gap: 28px; margin-bottom: 22px; }
+.metric-val { font-family: var(--serif); font-size: 22px; display: block; }
+.metric-label {
+  font-family: var(--mono);
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: .12em;
+  color: var(--ink-faint);
+}
+.work-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
+.work-tags span {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--ink-faint);
+  border: 1px solid var(--line);
+  padding: 3px 9px;
+  letter-spacing: .04em;
+}
+.work-links {
+  display: flex;
+  gap: 22px;
+  align-items: center;
+  margin-top: auto;
+  font-family: var(--mono);
+  font-size: 12px;
+}
+.work-links a { color: var(--gold); transition: color .25s; }
+.work-links a:hover { color: var(--gold-bright); }
+.work-note { color: var(--ink-faint); font-size: 10px; margin-left: auto; }
+.work-rows { border-top: 1px solid var(--line); }
+.work-row {
+  display: grid;
+  grid-template-columns: 50px 1fr auto;
+  gap: 22px;
+  align-items: center;
+  padding: 26px 8px;
+  border-bottom: 1px solid var(--line);
+  transition: background .25s;
+}
+.work-row:hover { background: var(--bg-soft); }
+.work-row-num { font-family: var(--mono); font-size: 12px; color: var(--ink-faint); }
+.work-row-title { font-family: var(--serif); font-weight: 500; font-size: 18px; }
+.work-row-desc { font-size: 13px; color: var(--ink-muted); margin-top: 4px; }
+.work-row-tag {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--ink-faint);
+  letter-spacing: .06em;
+  white-space: nowrap;
+}
+a.work-row-tag { color: var(--gold); }
+a.work-row-tag:hover { color: var(--gold-bright); }
