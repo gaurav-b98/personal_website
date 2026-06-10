@@ -516,6 +516,7 @@ a.work-row-tag:hover { color: var(--gold-bright); }
 }
 .wt-card:hover { transform: translateY(-3px); border-color: rgba(200,164,100,.35); }
 .wt-soon { border-style: dashed; background: transparent; }
+.wt-soon:hover { transform: none; }
 .wt-date { font-family: var(--mono); font-size: 11px; color: var(--gold); margin-bottom: 12px; }
 .wt-title { font-family: var(--serif); font-weight: 500; font-size: 19px; margin-bottom: 6px; }
 .wt-role { font-size: 13px; color: var(--ink-muted); }
@@ -528,7 +529,7 @@ a.work-row-tag:hover { color: var(--gold-bright); }
   align-items: start;
 }
 .edu-card { padding: 22px 0; border-bottom: 1px solid var(--line); }
-.edu-card:first-child { padding-top: 0; }
+.edu-col > .edu-card:first-child { padding-top: 0; }
 .edu-degree { font-family: var(--serif); font-weight: 500; font-size: 20px; }
 .edu-school { font-size: 13px; color: var(--ink-muted); margin-top: 4px; }
 .edu-meta {
@@ -556,7 +557,7 @@ a.work-row-tag:hover { color: var(--gold-bright); }
   padding: 18px 0;
   border-bottom: 1px solid var(--line);
 }
-.award-item:first-child { padding-top: 0; }
+.edu-col > .award-item:first-child { padding-top: 0; }
 .award-mark { color: var(--gold); font-size: 14px; }
 .award-name { font-family: var(--serif); font-weight: 500; font-size: 17px; }
 .award-src { font-size: 12px; color: var(--ink-faint); margin-top: 3px; }
