@@ -58,3 +58,66 @@ document.getElementById('year').textContent = new Date().getFullYear();
     }
   }, 45);
 })();
+
+/* ── Contact form (EmailJS) ──
+   NOTE: form sends nothing until real EmailJS credentials are pasted below.
+   Get them at https://dashboard.emailjs.com → Account (public key) +
+   Email Services (service ID) + Email Templates (template ID). */
+const EMAILJS_CONFIG = {
+  serviceID:  'YOUR_SERVICE_ID',
+  templateID: 'YOUR_TEMPLATE_ID',
+  publicKey:  'YOUR_PUBLIC_KEY'
+};
+
+function showToast(html, ms = 4000) {
+  const toast = document.getElementById('toast');
+  toast.innerHTML = html;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), ms);
+}
+
+const contactForm = document.getElementById('contact-form');
+if (contactForm) {
+  contactForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const name = document.getElementById('fn').value.trim();
+    const email = document.getElementById('fe').value.trim();
+    const subject = document.getElementById('fs').value.trim();
+    const msg = document.getElementById('fm').value.trim();
+
+    if (!name || !email || !msg) {
+      showToast('# please fill in name, email and message');
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      showToast('# that email address doesn\'t look right');
+      return;
+    }
+
+    const btn = document.getElementById('cf-submit');
+    const orig = btn.textContent;
+    btn.disabled = true;
+    btn.textContent = 'Sending…';
+
+    emailjs.send(
+      EMAILJS_CONFIG.serviceID,
+      EMAILJS_CONFIG.templateID,
+      { from_name: name, from_email: email,
+        subject: subject || 'Portfolio enquiry', message: msg },
+      EMAILJS_CONFIG.publicKey
+    )
+    .then(() => {
+      showToast('✓ message sent — I\'ll get back to you soon');
+      ['fn','fe','fs','fm'].forEach(id => { document.getElementById(id).value = ''; });
+    })
+    .catch((err) => {
+      console.error('EmailJS:', err);
+      showToast('✗ send failed — email me directly: ' +
+        '<a href="mailto:gauravb8170@gmail.com">gauravb8170@gmail.com</a>', 6000);
+    })
+    .finally(() => {
+      btn.disabled = false;
+      btn.textContent = orig;
+    });
+  });
+}
