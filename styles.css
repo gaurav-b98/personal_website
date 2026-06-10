@@ -352,6 +352,7 @@ footer {
 }
 .work-links {
   display: flex;
+  flex-wrap: wrap;
   gap: 22px;
   align-items: center;
   margin-top: auto;
@@ -366,7 +367,7 @@ footer {
   display: grid;
   grid-template-columns: 50px 1fr auto;
   gap: 22px;
-  align-items: center;
+  align-items: start;
   padding: 26px 8px;
   border-bottom: 1px solid var(--line);
   transition: background .25s;
