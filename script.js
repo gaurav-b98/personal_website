@@ -69,27 +69,43 @@ const EMAILJS_CONFIG = {
   publicKey:  'YOUR_PUBLIC_KEY'
 };
 
-function showToast(html, ms = 4000) {
+let toastTimer = null;
+function showToast(content, ms = 4000) {
   const toast = document.getElementById('toast');
-  toast.innerHTML = html;
+  toast.innerHTML = content;
   toast.classList.add('show');
-  setTimeout(() => toast.classList.remove('show'), ms);
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toast.classList.remove('show'), ms);
 }
 
 const contactForm = document.getElementById('contact-form');
 if (contactForm) {
+  const fieldEl = (id) => document.getElementById(id);
+  const setInvalid = (el, invalid) => {
+    if (invalid) el.setAttribute('aria-invalid', 'true');
+    else el.removeAttribute('aria-invalid');
+  };
+  ['fn', 'fe', 'fm'].forEach((id) => {
+    fieldEl(id).addEventListener('input', () => setInvalid(fieldEl(id), false));
+  });
+
   contactForm.addEventListener('submit', (e) => {
     e.preventDefault();
-    const name = document.getElementById('fn').value.trim();
-    const email = document.getElementById('fe').value.trim();
-    const subject = document.getElementById('fs').value.trim();
-    const msg = document.getElementById('fm').value.trim();
+    const name = fieldEl('fn').value.trim();
+    const email = fieldEl('fe').value.trim();
+    const subject = fieldEl('fs').value.trim();
+    const msg = fieldEl('fm').value.trim();
+    const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+    setInvalid(fieldEl('fn'), !name);
+    setInvalid(fieldEl('fe'), !email || !emailOk);
+    setInvalid(fieldEl('fm'), !msg);
 
     if (!name || !email || !msg) {
       showToast('# please fill in name, email and message');
       return;
     }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    if (!emailOk) {
       showToast('# that email address doesn\'t look right');
       return;
     }
@@ -98,26 +114,38 @@ if (contactForm) {
     const orig = btn.textContent;
     btn.disabled = true;
     btn.textContent = 'Sending…';
+    const fail = () => showToast('✗ send failed — email me directly: ' +
+      '<a href="mailto:gauravb8170@gmail.com">gauravb8170@gmail.com</a>', 6000);
 
-    emailjs.send(
-      EMAILJS_CONFIG.serviceID,
-      EMAILJS_CONFIG.templateID,
-      { from_name: name, from_email: email,
-        subject: subject || 'Portfolio enquiry', message: msg },
-      EMAILJS_CONFIG.publicKey
-    )
-    .then(() => {
-      showToast('✓ message sent — I\'ll get back to you soon');
-      ['fn','fe','fs','fm'].forEach(id => { document.getElementById(id).value = ''; });
-    })
-    .catch((err) => {
-      console.error('EmailJS:', err);
-      showToast('✗ send failed — email me directly: ' +
-        '<a href="mailto:gauravb8170@gmail.com">gauravb8170@gmail.com</a>', 6000);
-    })
-    .finally(() => {
+    let sendPromise;
+    try {
+      sendPromise = emailjs.send(
+        EMAILJS_CONFIG.serviceID,
+        EMAILJS_CONFIG.templateID,
+        { from_name: name, from_email: email,
+          subject: subject || 'Portfolio enquiry', message: msg },
+        EMAILJS_CONFIG.publicKey
+      );
+    } catch (err) {
+      console.error('EmailJS unavailable:', err);
       btn.disabled = false;
       btn.textContent = orig;
-    });
+      fail();
+      return;
+    }
+
+    sendPromise
+      .then(() => {
+        showToast('✓ message sent — I\'ll get back to you soon');
+        ['fn','fe','fs','fm'].forEach(id => { fieldEl(id).value = ''; });
+      })
+      .catch((err) => {
+        console.error('EmailJS:', err);
+        fail();
+      })
+      .finally(() => {
+        btn.disabled = false;
+        btn.textContent = orig;
+      });
   });
 }

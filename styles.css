@@ -77,7 +77,7 @@ em { font-style: italic; }
   z-index: 1600;
   max-width: 90vw;
 }
-#toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+#toast.show { opacity: 1; transform: translateX(-50%) translateY(0); pointer-events: auto; }
 #toast a { color: var(--gold); text-decoration: underline; }
 
 /* ════════ NAV ════════ */
@@ -609,4 +609,4 @@ a.work-row-tag:hover { color: var(--gold-bright); }
 }
 .cf-group input::placeholder, .cf-group textarea::placeholder { color: var(--ink-faint); }
 .cf .btn-gold { border: none; cursor: pointer; }
-.cf .btn-gold:disabled { opacity: .55; cursor: wait; transform: none; }
+.cf .btn-gold:disabled { opacity: .55; cursor: wait; transform: none; pointer-events: none; }
