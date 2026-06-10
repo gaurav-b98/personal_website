@@ -35,3 +35,26 @@ mobileNav.querySelectorAll('a').forEach(a => {
 
 /* ── Footer year ── */
 document.getElementById('year').textContent = new Date().getFullYear();
+
+/* ── Hero: typed kicker ── */
+(function typeKicker() {
+  const target = document.getElementById('typed');
+  const cursor = document.getElementById('typed-cursor');
+  if (!target) return;
+  const text = '$ whoami — ML Engineer · Dublin';
+  if (prefersReducedMotion) {
+    target.textContent = text;
+    cursor.style.display = 'none';
+    return;
+  }
+  let i = 1; // "$ " already present
+  target.textContent = '$ ';
+  const tick = setInterval(() => {
+    i++;
+    target.textContent = text.slice(0, i);
+    if (i >= text.length) {
+      clearInterval(tick);
+      setTimeout(() => { cursor.style.display = 'none'; }, 2500);
+    }
+  }, 45);
+})();
