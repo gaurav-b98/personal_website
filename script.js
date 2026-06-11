@@ -263,9 +263,9 @@ document.getElementById('year').textContent = new Date().getFullYear();
    Get them at https://dashboard.emailjs.com → Account (public key) +
    Email Services (service ID) + Email Templates (template ID). */
 const EMAILJS_CONFIG = {
-  serviceID:  'YOUR_SERVICE_ID',
-  templateID: 'YOUR_TEMPLATE_ID',
-  publicKey:  'YOUR_PUBLIC_KEY'
+  serviceID:  'service_okqz76q',
+  templateID: 'template_5spavz5',
+  publicKey:  'eyud_gXLyddwgTmTR'
 };
 
 let toastTimer = null;
