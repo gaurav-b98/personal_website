@@ -41,7 +41,7 @@ document.getElementById('year').textContent = new Date().getFullYear();
   const target = document.getElementById('typed');
   const cursor = document.getElementById('typed-cursor');
   if (!target || !cursor) return;
-  const text = '$ whoami — ML Engineer · Dublin';
+  const text = '$ whoami · ML Engineer · Dublin';
   if (prefersReducedMotion) {
     target.textContent = text;
     cursor.style.display = 'none';
@@ -313,7 +313,7 @@ if (contactForm) {
     const orig = btn.textContent;
     btn.disabled = true;
     btn.textContent = 'Sending…';
-    const fail = () => showToast('✗ send failed — email me directly: ' +
+    const fail = () => showToast('✗ send failed. email me directly: ' +
       '<a href="mailto:gauravb8170@gmail.com">gauravb8170@gmail.com</a>', 6000);
 
     let sendPromise;
@@ -335,7 +335,7 @@ if (contactForm) {
 
     sendPromise
       .then(() => {
-        showToast('✓ message sent — I\'ll get back to you soon');
+        showToast('✓ message sent. I\'ll get back to you soon');
         ['fn','fe','fs','fm'].forEach(id => { fieldEl(id).value = ''; });
       })
       .catch((err) => {
