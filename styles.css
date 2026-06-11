@@ -563,8 +563,14 @@ footer {
 
 /* ════════ CONTACT ════════ */
 #contact { padding-bottom: 140px; }
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 64px;
+  align-items: start;
+}
 .contact-sub { font-size: 16px; color: var(--ink-muted); max-width: 52ch; margin-bottom: 36px; }
-.contact-links { display: flex; gap: 28px; flex-wrap: wrap; margin-bottom: 64px; }
+.contact-links { display: flex; flex-direction: column; gap: 16px; }
 .contact-links a {
   font-family: var(--mono);
   font-size: 13px;
@@ -618,6 +624,7 @@ footer {
   .about-grid { grid-template-columns: 1fr; gap: 44px; }
   .about-photo { max-width: 380px; }
   .edu-grid { grid-template-columns: 1fr; gap: 44px; }
+  .contact-grid { grid-template-columns: 1fr; gap: 44px; }
 }
 @media (max-width: 640px) {
   section { padding: 84px 6vw; }
