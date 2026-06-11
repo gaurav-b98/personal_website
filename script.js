@@ -99,7 +99,8 @@ document.getElementById('year').textContent = new Date().getFullYear();
         vy: (Math.random() - .5) * .3,
         r: Math.random() * 1.3 + .6,
         a: Math.random() * .35 + .15,
-        side: 0 // assigned to nearest margin when migration starts
+        side: 0,    // assigned to nearest margin when migration starts
+        homeX: null // ease target; null = roam free
       });
     }
   }
@@ -115,7 +116,7 @@ document.getElementById('year').textContent = new Date().getFullYear();
     // Past the hero, ease toward the NEAREST empty side margin.
     // Position lerp, not a velocity spring — no momentum, so nodes
     // can never overshoot and oscillate across the content column.
-    if (scrollT > 0 && bandW > MIN_BAND) {
+    if (scrollT > .04 && bandW > MIN_BAND) {
       if (n.side === 0) {
         n.side = n.x < W / 2 ? -1 : 1;
         // Own home spot spread across the band — converging on one
@@ -126,8 +127,19 @@ document.getElementById('year').textContent = new Date().getFullYear();
       }
       n.x += (n.homeX - n.x) * .006 * scrollT;
     } else {
-      n.side = 0;
+      if (n.side !== 0) {
+        // Back in the hero: scatter home spots across the full page
+        n.side = 0;
+        n.homeX = Math.random() * W;
+      }
+      if (n.homeX !== null) {
+        n.x += (n.homeX - n.x) * .006;
+        if (Math.abs(n.homeX - n.x) < 30) n.homeX = null; // arrived, roam free
+      }
     }
+    // Constant tiny jitter — pure damping otherwise freezes the field
+    n.vx += (Math.random() - .5) * .09;
+    n.vy += (Math.random() - .5) * .09;
     n.vx *= .985;
     n.vy *= .985;
     n.x += n.vx;
